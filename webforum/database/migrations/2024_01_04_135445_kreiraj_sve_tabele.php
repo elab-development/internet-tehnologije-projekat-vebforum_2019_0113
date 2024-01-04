@@ -27,7 +27,7 @@ return new class extends Migration
         Schema::create('objave', function (Blueprint $table) {
             $table->id();
             $table->string('naziv',50);
-            $table->string('tekst',150);
+            $table->string('tekst',1000);
             $table->date('datumObjave');
             $table->integer('brojSvidjanja');
             $table->integer('brojNesvidjanja');
