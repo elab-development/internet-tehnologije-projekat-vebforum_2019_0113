@@ -9,6 +9,8 @@ class Objava extends Model
 {
     use HasFactory;
 
+    protected $table = 'objave';
+
     protected $fillable = [
         'naziv', 
         'tekst',

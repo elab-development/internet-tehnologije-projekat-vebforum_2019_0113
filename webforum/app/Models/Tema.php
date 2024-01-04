@@ -9,6 +9,8 @@ class Tema extends Model
 {
     use HasFactory;
 
+    protected $table = 'teme';
+
     protected $fillable = [
         'naziv', 
         'opis'

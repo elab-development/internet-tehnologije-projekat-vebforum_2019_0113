@@ -19,7 +19,7 @@ return new class extends Migration
         //TABELA TEME
         Schema::table('teme', function (Blueprint $table) {
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
-            $table->foreignId('zajednica_id')->nullable()->references('id')->on('zajednica')->onDelete('set null');
+            $table->foreignId('zajednica_id')->nullable()->references('id')->on('zajednice')->onDelete('set null');
         });
 
         //TABELA OBJAVE
@@ -29,7 +29,7 @@ return new class extends Migration
         });
 
         //TABELA KOMENTARI
-        Schema::table('comments', function (Blueprint $table) {
+        Schema::table('komentari', function (Blueprint $table) {
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->foreignId('objava_id')->nullable()->references('id')->on('objave')->onDelete('set null');
         });

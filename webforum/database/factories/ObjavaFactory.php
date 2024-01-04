@@ -23,8 +23,8 @@ class ObjavaFactory extends Factory
             'naziv' =>$this->faker->name(), 
             'tekst' =>$this->faker->paragraph(),
             'datumObjave' =>now(),
-            'brojSvidjanja' =>numberBetween($min = 100, $max = 1000),
-            'brojNesvidjanja' =>numberBetween($min = 100, $max = 1000),
+            'brojSvidjanja' =>$this->faker->numberBetween($min = 100, $max = 1000),
+            'brojNesvidjanja' =>$this->faker->numberBetween($min = 100, $max = 1000),
             'user_id' =>User::factory(), 
             'tema_id' =>Tema::factory(), 
         ];

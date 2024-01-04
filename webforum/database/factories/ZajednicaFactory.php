@@ -19,7 +19,7 @@ class ZajednicaFactory extends Factory
     {
         return [
             'naziv'=>$this->faker->name(), 
-            'opis'=>$this->faker->sentance(),
+            'opis'=>$this->faker->sentence(),
             'brojTema'=>$this->faker->numberBetween(1, 5),
             'user_id'=>User::factory() 
         ];

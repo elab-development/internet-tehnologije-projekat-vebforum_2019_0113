@@ -9,6 +9,8 @@ class Komentar extends Model
 {
     use HasFactory;
 
+    protected $table = 'komentari';
+
     protected $fillable = [ 
         'tekst',
         'datumKomentarisanja',
