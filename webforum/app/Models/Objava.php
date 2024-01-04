@@ -16,4 +16,19 @@ class Objava extends Model
         'brojSvidjanja',
         'brojNesvidjanja' 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tema()
+    {
+        return $this->belongsTo(Tema::class);
+    }
+
+    public function komentari()
+    {
+        return $this->hasMany(Komentar::class);
+    }
 }

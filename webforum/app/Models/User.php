@@ -42,4 +42,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function zajednice()
+    {
+        return $this->hasMany(Zajednica::class);
+    }
+
+    public function teme()
+    {
+        return $this->hasMany(Tema::class);
+    }
+
+    public function objave()
+    {
+        return $this->hasMany(Objava::class);
+    }
+
+    public function komentari()
+    {
+        return $this->hasMany(Komentar::class);
+    }
 }

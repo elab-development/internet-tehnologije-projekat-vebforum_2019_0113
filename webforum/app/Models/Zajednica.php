@@ -14,4 +14,14 @@ class Zajednica extends Model
         'opis',
         'brojTema' 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function teme()
+    {
+        return $this->hasMany(Tema::class);
+    }
 }

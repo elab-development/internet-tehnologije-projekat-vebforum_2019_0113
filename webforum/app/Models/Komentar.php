@@ -15,4 +15,15 @@ class Komentar extends Model
         'brojSvidjanja',
         'brojNesvidjanja' 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function objava()
+    {
+        return $this->belongsTo(Objava::class);
+    }
+
 }

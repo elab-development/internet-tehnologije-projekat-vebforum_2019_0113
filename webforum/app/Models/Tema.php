@@ -13,4 +13,20 @@ class Tema extends Model
         'naziv', 
         'opis'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function zajednica()
+    {
+        return $this->belongsTo(Zajednica::class);
+    }
+
+    public function objave()
+    {
+        return $this->hasMany(Objava::class);
+    }
+
 }
