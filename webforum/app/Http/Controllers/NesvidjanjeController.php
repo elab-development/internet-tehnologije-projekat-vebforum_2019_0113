@@ -14,6 +14,20 @@ class NesvidjanjeController extends Controller
 {
     public function nesvidjaMiSeObjava($id)
     {
+        $user_id = Auth::user()->id;
+
+        //MODERATOR TEMA
+        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        //MODERATOR ZAJEDNICA
+        $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+        //ADMINISTRATOR
+        $jeAdmin = Auth::user()->jeAdmin;
+            
+        if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
+         return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da oznacavju objave svidjanjem!'], 403);
+        }
+
+
         $objava = Objava::findOrFail($id);
 
         $objava->brojNesvidjanja++;
@@ -24,6 +38,19 @@ class NesvidjanjeController extends Controller
 
     public function nesvidjaMiSeKomentar($id)
     {
+        $user_id = Auth::user()->id;
+
+        //MODERATOR TEMA
+        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        //MODERATOR ZAJEDNICA
+        $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+        //ADMINISTRATOR
+        $jeAdmin = Auth::user()->jeAdmin;
+            
+        if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
+         return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da oznacavju komentare svidjanjem!'], 403);
+        }
+        
         $komentar = Komentar::findOrFail($id);
 
         $komentar->brojNesvidjanja++;

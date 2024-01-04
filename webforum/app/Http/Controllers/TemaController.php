@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Auth;
+
 class TemaController extends Controller
 {
     public function index()
@@ -28,19 +30,30 @@ class TemaController extends Controller
 
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id; 
 
     $validator = Validator::make($request->all(), [
         'naziv' => 'required',
         'opis' => 'required',
         'baner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'zajednica_id' => 'required',
-        'user_id' => 'required',
 
     ]);
 
     if ($validator->fails()) {
         return response()->json($validator->errors());
     }
+
+                //MODERATOR TEMA
+                $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+                //MODERATOR ZAJEDNICA
+                $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+                //ADMINISTRATOR
+                $jeAdmin = Auth::user()->jeAdmin;
+        
+                if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
+                    return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da kreiraju teme'], 403);
+                }
 
 
     $imeBanera = Str::random(32).".".$request->baner->getClientOriginalExtension();
@@ -57,10 +70,12 @@ class TemaController extends Controller
     if ($zajednica) {
         $zajednica->brojTema++;
         $zajednica->save();
+    }else{
+        return response()->json(['error' => 'UNETA ZAJEDNICA NE POSTOJI!!!'], 403);
     }
 
 
-    $tema->user_id = $request->user_id;
+    $tema->user_id = $user_id;
 
     $tema->save();
 
@@ -73,12 +88,18 @@ class TemaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user_id = Auth::user()->id; 
+        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        $tema_user_id = Tema::where('id', $id)->value('user_id');
+
+        if($user_id != $tema_user_id || !$jeModeratorTeme){
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu menjati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'naziv' => 'required',
             'opis' => 'required',
             'baner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'zajednica_id' => 'required',
-            'user_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -108,9 +129,7 @@ class TemaController extends Controller
             $storage->put($imeBanera, file_get_contents($request->baner));
         }
 
-
-        $tema->zajednica_id = $request->zajednica_id;
-        $tema->user_id = $request->user_id;
+        $tema->user_id = $user_id;
 
 
         $tema->save();
@@ -121,6 +140,14 @@ class TemaController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $user_id = Auth::user()->id; 
+        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        $tema_user_id = Tema::where('id', $id)->value('user_id');
+
+        if($user_id != $tema_user_id || !$jeModeratorTeme){
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu menjati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
+        }
+
         $request->validate([
             'status' => 'required'
         ]);
@@ -136,6 +163,13 @@ class TemaController extends Controller
 
     public function destroy($id)
     {
+        $user_id = Auth::user()->id; 
+        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        $tema_user_id = Tema::where('id', $id)->value('user_id');
+
+        if($user_id != $tema_user_id || !$jeModeratorTeme){
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu brisati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
+        }
         $tema = tema::findOrFail($id);
           // Public storage
           $storage = Storage::disk('public');

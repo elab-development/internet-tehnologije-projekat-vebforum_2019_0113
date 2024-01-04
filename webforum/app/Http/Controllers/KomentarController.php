@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+
 class KomentarController extends Controller
 {
     public function index()
@@ -27,17 +29,28 @@ class KomentarController extends Controller
 
     public function store(Request $request)
     {
+        $user_id = Auth::user()->id; 
 
     $validator = Validator::make($request->all(), [
         'tekst' => 'required',
         'objava_id' => 'required',
-        'user_id' => 'required',
 
     ]);
 
     if ($validator->fails()) {
         return response()->json($validator->errors());
     }
+
+            //MODERATOR TEMA
+            $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+            //MODERATOR ZAJEDNICA
+            $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+            //ADMINISTRATOR
+            $jeAdmin = Auth::user()->jeAdmin;
+    
+            if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
+                return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da ostavljaju komentare'], 403);
+            }
 
 
     $komentar = new Komentar();
@@ -49,7 +62,7 @@ class KomentarController extends Controller
     
     $objava = Objava::find($komentar->objava_id);
 
-    $komentar->user_id = $request->user_id;
+    $komentar->user_id = $user_id;
 
     $komentar->save();
 
@@ -62,6 +75,14 @@ class KomentarController extends Controller
 
     public function updateTekst(Request $request, $id)
      {
+        $user_id = Auth::user()->id; 
+        $jeAdmin = Auth::user()->jeAdmin;
+        $komentar_user_id = Komentar::where('id', $id)->value('user_id');
+
+        if($user_id != $komentar_user_id || !$jeAdmin){
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Komentar mogu menjati ili korisnik koji ga je kreirao ili admin!'], 403);
+        }
+
          $request->validate([
              'tekst' => 'required'
          ]);
@@ -77,7 +98,17 @@ class KomentarController extends Controller
 
     public function destroy($id)
     {
+
+        $user_id = Auth::user()->id; 
+        $jeAdmin = Auth::user()->jeAdmin;
+        $komentar_user_id = Komentar::where('id', $id)->value('user_id');
+
+        if($user_id != $komentar_user_id || !$jeAdmin){
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Komentar mogu brisati ili korisnik koji ga je kreirao ili admin!'], 403);
+        }
+
         $komentar = komentar::findOrFail($id);
+
         $komentar->delete();
         return response()->json('Dati komentar je uspesno obrisan!');
     }
