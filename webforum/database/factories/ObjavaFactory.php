@@ -22,7 +22,7 @@ class ObjavaFactory extends Factory
         return [
             'naziv' =>$this->faker->name(), 
             'tekst' =>$this->faker->paragraph(),
-            'datumObjave' =>now(),
+            'datumObjave' =>now()->subDays(rand(1, 10)),
             'brojSvidjanja' =>$this->faker->numberBetween($min = 100, $max = 1000),
             'brojNesvidjanja' =>$this->faker->numberBetween($min = 100, $max = 1000),
             'user_id' =>User::factory(), 

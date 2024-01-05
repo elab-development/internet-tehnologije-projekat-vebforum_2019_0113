@@ -10,6 +10,8 @@ use App\Models\Objava;
 use App\Http\Resources\KomentarResource;
 use App\Models\Komentar;
 
+use Illuminate\Support\Facades\Auth;
+
 
 class SvidjanjeController extends Controller
 {

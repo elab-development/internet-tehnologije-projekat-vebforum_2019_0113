@@ -72,7 +72,7 @@ class ZajednicaController extends Controller
         $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
         $zajednica_user_id = Zajednica::where('id', $id)->value('user_id');
 
-        if($user_id != $zajednica_user_id || !$jeModeratorZajednice){
+        if($user_id != $zajednica_user_id && !$jeModeratorZajednice){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Zajednicu mogu menjati samo moderator zajednica ili korisnik koji ju je kreirao!'], 403);
         }
 
@@ -90,36 +90,12 @@ class ZajednicaController extends Controller
 
         $zajednica->naziv = $request->naziv;
         $zajednica->opis = $request->opis;
-        $zajednica->brojTema = $request->brojtema;
         $zajednica->user_id = $user_id;
 
         $zajednica->save();
 
         return response()->json(['Zajednica je uspesno izmenjena!', new ZajednicaResource($zajednica)]);
     }
-
-
-    public function updateOpis(Request $request, $id)
-     {
-
-        $user_id = Auth::user()->id; 
-        $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
-        $zajednica_user_id = Zajednica::where('id', $id)->value('user_id');
-
-        if($user_id != $zajednica_user_id || !$jeModeratorZajednice){
-            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Zajednicu mogu menjati samo moderator zajednica ili korisnik koji ju je kreirao!'], 403);
-        }
-
-         $request->validate([
-             'opis' => 'required'
-         ]);
-
-         $zajednica = Zajednica::findOrFail($id);
-
-         $zajednica->update(['opis' => $request->input('opis')]);
-
-         return response()->json(['message' => 'Opis zajednice je uspesno izmenjen.', new ZajednicaResource($zajednica)]);
-     }
 
 
 
@@ -130,7 +106,7 @@ class ZajednicaController extends Controller
         $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
         $zajednica_user_id = Zajednica::where('id', $id)->value('user_id');
 
-        if($user_id != $zajednica_user_id || !$jeModeratorZajednice){
+        if($user_id != $zajednica_user_id && !$jeModeratorZajednice){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Zajednicu mogu brisati samo moderator zajednica ili korisnik koji ju je kreirao!'], 403);
         }
 

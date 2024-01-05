@@ -76,7 +76,7 @@ class ObjavaController extends Controller
         $jeAdmin = Auth::user()->jeAdmin;
         $objava_user_id = Objava::where('id', $id)->value('user_id');
 
-        if($user_id != $objava_user_id || !$jeAdmin){
+        if($user_id != $objava_user_id && !$jeAdmin){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Objavu mogu menjati ili korisnik koji ju je kreirao ili admin!'], 403);
         }
 
@@ -100,7 +100,7 @@ class ObjavaController extends Controller
         $jeAdmin = Auth::user()->jeAdmin;
         $objava_user_id = Objava::where('id', $id)->value('user_id');
 
-        if($user_id != $objava_user_id || !$jeAdmin){
+        if($user_id != $objava_user_id && !$jeAdmin){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Objavu mogu brisati ili korisnik koji ju je kreirao ili admin!'], 403);
         }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\TemaResource;
 use App\Models\Tema;
+use App\Models\Zajednica;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Str;
@@ -92,7 +93,7 @@ class TemaController extends Controller
         $jeModeratorTeme = Auth::user()->jeModeratorTeme;
         $tema_user_id = Tema::where('id', $id)->value('user_id');
 
-        if($user_id != $tema_user_id || !$jeModeratorTeme){
+        if($user_id != $tema_user_id && !$jeModeratorTeme){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu menjati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
         }
 
@@ -137,37 +138,13 @@ class TemaController extends Controller
         return response()->json(['Tema je uspesno izmenjena!', new TemaResource($tema)]);
     }
 
-
-    public function updateStatus(Request $request, $id)
-    {
-        $user_id = Auth::user()->id; 
-        $jeModeratorTeme = Auth::user()->jeModeratorTeme;
-        $tema_user_id = Tema::where('id', $id)->value('user_id');
-
-        if($user_id != $tema_user_id || !$jeModeratorTeme){
-            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu menjati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
-        }
-
-        $request->validate([
-            'status' => 'required'
-        ]);
-
-        $tema = Tema::findOrFail($id);
-
-        $tema->update(['status' => $request->input('status')]);
-
-        return response()->json(['message' => 'Status teme je uspesno izmenjen.', new TemaResource($tema)]);
-    }
-
-
-
     public function destroy($id)
     {
         $user_id = Auth::user()->id; 
         $jeModeratorTeme = Auth::user()->jeModeratorTeme;
         $tema_user_id = Tema::where('id', $id)->value('user_id');
 
-        if($user_id != $tema_user_id || !$jeModeratorTeme){
+        if($user_id != $tema_user_id && !$jeModeratorTeme){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu brisati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
         }
         $tema = tema::findOrFail($id);

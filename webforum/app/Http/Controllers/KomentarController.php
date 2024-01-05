@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\KomentarResource;
 use App\Models\Komentar;
+use App\Models\Objava;
 use Illuminate\Support\Facades\Validator;
 
 use Carbon\Carbon;
@@ -79,7 +80,7 @@ class KomentarController extends Controller
         $jeAdmin = Auth::user()->jeAdmin;
         $komentar_user_id = Komentar::where('id', $id)->value('user_id');
 
-        if($user_id != $komentar_user_id || !$jeAdmin){
+        if($user_id != $komentar_user_id && !$jeAdmin){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Komentar mogu menjati ili korisnik koji ga je kreirao ili admin!'], 403);
         }
 
@@ -103,7 +104,7 @@ class KomentarController extends Controller
         $jeAdmin = Auth::user()->jeAdmin;
         $komentar_user_id = Komentar::where('id', $id)->value('user_id');
 
-        if($user_id != $komentar_user_id || !$jeAdmin){
+        if($user_id != $komentar_user_id && !$jeAdmin){
             return response()->json(['error' => 'NEOVLASCEN PRISTUP: Komentar mogu brisati ili korisnik koji ga je kreirao ili admin!'], 403);
         }
 
