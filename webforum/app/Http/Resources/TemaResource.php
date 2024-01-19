@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TemaResource extends JsonResource
@@ -10,25 +9,27 @@ class TemaResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-            'ID Teme: ' => $this->resource->id,
-            'Naziv teme: ' => $this->resource->naziv,
-            'Opis: '=> $this->resource->opis,
-            'Status: '=> $this->resource->status,
-            'Baner: '=> $this->resource->baner,
-            'Tema je deo zajednice: '=> (new ZajednicaResource(optional($this->resource->zajednica)))->vratiNaziv(),
-            'Tema kreirana od strane korisnika: '=> new UserResource($this->resource->user),
+            'id_teme' => $this->id,
+            'naziv_teme' => $this->naziv,
+            'opis' => $this->opis,
+            'status' => $this->status,
+            'baner' => $this->baner,
+            'zajednica' => new ZajednicaResource($this->zajednica),
+            'user' => new UserResource($this->user),
+          
         ];
     }
 
-    public function vratiNaziv(): array
+    public function vratiNaziv()
     {
         return [
-            $this->resource->naziv,
+            'naziv' => $this->naziv,
         ];
     }
 }

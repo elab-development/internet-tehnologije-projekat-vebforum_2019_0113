@@ -1,35 +1,36 @@
 <?php
-
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\KomentarResource; // Assuming you have a KomentarResource
 
 class ObjavaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-            'ID Objave: ' => $this->resource->id,
-            'Naziv objave: ' => $this->resource->naziv,
-            'Tekst objave: '=> $this->resource->tekst,
-            'Datum objave: '=> $this->resource->datumObjave,
-            'Broj svidjanja: '=> $this->resource->brojSvidjanja,
-            'Broj nesvidjanja: '=> $this->resource->brojNesvidjanja,
-            'Objava se nalazi u okviru teme: '=> (new TemaResource(optional($this->resource->tema)))->vratiNaziv(),
-            'Objava kreirana od strane korisnika: '=> new UserResource($this->resource->user),
+            'id' => $this->id,
+            'naziv' => $this->naziv,
+            'tekst' => $this->tekst,
+            'datum_objave' => $this->datumObjave,
+            'broj_svidjanja' => $this->brojSvidjanja,
+            'broj_nesvidjanja' => $this->brojNesvidjanja,
+            'tema' => new TemaResource($this->tema),
+            'user' => new UserResource($this->user),
+            'komentari' => KomentarResource::collection($this->whenLoaded('comments'))
         ];
     }
 
-    public function vratiNaziv(): array
+    public function vratiNaziv()
     {
         return [
-            $this->resource->naziv,
+            'naziv' => $this->naziv,
         ];
     }
 }
