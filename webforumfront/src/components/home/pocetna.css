@@ -1,0 +1,42 @@
+ 
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .quote, .joke {
+    background-color: #8C7AA9; /* African Violet */
+    color: #EFAFFF; /* Mauve */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 45%;
+  }
+  
+  .quote h2, .joke h2 {
+    color: #DC6BAD; 
+  }
+  
+  .forum-homepage {
+    text-align: center;
+    color: #EFAFFF;  
+    
+  }
+  .header h1 {
+    color: #DC6BAD;  
+    margin-bottom: 0.5rem;
+  }
+  
+  .header p {
+    color: #7192BE;  
+    margin-bottom: 1rem;
+  }
+  
+  .icons i {
+    margin: 0 10px;
+    font-size: 24px;
+    color: #8C7AA9;  
+  }
