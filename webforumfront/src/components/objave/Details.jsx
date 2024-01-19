@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './Details.css';
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import CommentComponent from './CommentComponent ';
 
 const Details = ({comments, setComments}) => {
   const { id } = useParams();
@@ -73,11 +74,8 @@ const Details = ({comments, setComments}) => {
       </div>
       <div>
         {comments.map((comment, index) => (
-          <div key={index} className="comment">
-            <p>{comment.text}</p>
-            <p>{comment.date}</p>
-          </div>
-        ))}
+            <CommentComponent key={index} comment={comment} />
+          ))}
       </div>
     </div>
   );
