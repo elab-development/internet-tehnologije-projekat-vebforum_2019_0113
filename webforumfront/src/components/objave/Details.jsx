@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Details.css'; 
 import { FaThumbsUp } from "react-icons/fa";
 import { FaThumbsDown } from "react-icons/fa";
+
 const Details = () => {
   const { id } = useParams();
   const [objava, setObjava] = useState(null);
@@ -25,11 +26,9 @@ const Details = () => {
       <div className="details-header" style={{ backgroundColor: '#yourColor' }}>
         <h2 className="details-title">{objava.naziv}</h2>
         <span className="details-category">{objava.tema.naziv_teme}</span>
+        <p className="details-date">{objava.datum_objave}</p>
       </div>
       <p className="details-text">{objava.tekst}</p>
-      <p className="details-info">
-        <strong>Datum objave:</strong> {objava.datum_objave}
-      </p>
       <p className="details-info">
         <strong>Korisnik:</strong> {objava.user.ime}
       </p>
@@ -44,7 +43,7 @@ const Details = () => {
       </div>
       <div className="details-dislikes">
         <strong>
-          <FaThumbsDown    style={{ color: 'red' }} />
+          <FaThumbsDown style={{ color: 'red' }} />
           {objava.broj_nesvidjanja}
         </strong>
       </div>
