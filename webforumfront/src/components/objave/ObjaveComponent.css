@@ -53,3 +53,22 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .page-number {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .page-number:hover {
+    background-color: #f0f0f0;
+  }
+  
