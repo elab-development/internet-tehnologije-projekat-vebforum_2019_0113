@@ -23,7 +23,7 @@ class ObjavaResource extends JsonResource
             'broj_nesvidjanja' => $this->brojNesvidjanja,
             'tema' => new TemaResource($this->tema),
             'user' => new UserResource($this->user),
-            'komentari' => KomentarResource::collection($this->whenLoaded('comments'))
+           // 'komentari' => KomentarResource::collection($this->komentari)
         ];
     }
 

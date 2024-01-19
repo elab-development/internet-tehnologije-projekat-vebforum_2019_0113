@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ZajednicaResource extends JsonResource
@@ -10,26 +8,26 @@ class ZajednicaResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
         return [
-                    'ID Zajednice: ' => $this->resource->id,
-                    'Naziv zajednice: ' => $this->resource->naziv,
-                    'Opis: '=> $this->resource->opis,
-                    'Broj tema u okviru zajednice: '=>$this->resource->brojTema,
-                    'Zajednica kreirana od korisnika: '=> new UserResource($this->resource->user),
-                    
+            'id_zajednice' => $this->id,
+            'naziv_zajednice' => $this->naziv,
+            'opis' => $this->opis,
+            'broj_tema' => $this->brojTema,
+            'korisnik' => new UserResource($this->user),
+            
         ];
-        
-
     }
-    
-    public function vratiNaziv(): array
+
+    public function vratiNaziv()
     {
         return [
-            $this->resource->naziv,
+            'naziv' => $this->naziv,
         ];
     }
 }
+
