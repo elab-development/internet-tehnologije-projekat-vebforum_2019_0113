@@ -5,6 +5,7 @@ import ForumHomepage from './components/home/ForumHomePage';
  
 import Navbar from './components/navbar/Navbar';
 import ObjaveComponent from './components/objave/ObjaveComponent ';
+import Details from './components/objave/Details';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Navbar></Navbar>
         <Routes>
           <Route path="/" element={<ForumHomepage />} />
+          <Route path="/objave/:id" element={<Details />} />
           <Route path="/objave" element={<ObjaveComponent />} />
         </Routes>
       </div>

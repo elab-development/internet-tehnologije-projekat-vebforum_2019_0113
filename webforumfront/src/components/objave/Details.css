@@ -1,0 +1,37 @@
+.details-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+  
+  .details-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .details-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .details-info {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .details-likes,
+  .details-dislikes {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #555;
+  }
+ 
+  
+  
