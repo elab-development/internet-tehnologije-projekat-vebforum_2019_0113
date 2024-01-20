@@ -10,7 +10,7 @@ const Details = ({comments, setComments}) => {
   const [objava, setObjava] = useState(null);
   
   const [newComment, setNewComment] = useState('');
-
+  const [sortAscending, setSortAscending] = useState(true);
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/objave/${id}`)
       .then(response => {
@@ -36,7 +36,20 @@ const Details = ({comments, setComments}) => {
   if (!objava) {
     return <div>Loading...</div>;
   }
+  const toggleSortOrder = () => {
+    setSortAscending(!sortAscending);
+  };
 
+  // Function to sort comments based on date
+  const sortedComments = [...comments].sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return sortAscending ? dateA - dateB : dateB - dateA;
+  });
+
+  if (!objava) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="details-container">
            <div className="details-header" style={{ backgroundColor: '#yourColor' }}>
@@ -72,10 +85,13 @@ const Details = ({comments, setComments}) => {
         />
         <button onClick={submitComment}>Postavi komentar</button>
       </div>
+      <button onClick={toggleSortOrder}>
+        Sortiraj Komentare {sortAscending ? 'Opadajuće' : 'Rastuće'}
+      </button>
       <div>
-        {comments.map((comment, index) => (
-            <CommentComponent key={index} comment={comment} />
-          ))}
+        {sortedComments.map((comment, index) => (
+          <CommentComponent key={index} comment={comment} />
+        ))}
       </div>
     </div>
   );
