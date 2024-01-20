@@ -40,3 +40,21 @@
     font-size: 24px;
     color: #8C7AA9;  
   }
+  .rules-section {
+    background-color: #f0f0f8; /* svetlo siva boja */
+    color: #333; /* tamno siva boja */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rules-section h2 {
+    color: #DC6BAD; /* boja naslova */
+  }
+  
+  .rules-section ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
