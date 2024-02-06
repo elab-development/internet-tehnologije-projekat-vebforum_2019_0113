@@ -20,7 +20,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['Registracija neuspesna:', $validator->errors()]);
+            return response()->json(['Registracija neuspešna:' => $validator->errors()]);
         }
 
         $user = User::create([
@@ -29,18 +29,18 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $token = $user->createToken('TokenReg')->plainTextToken;
+        $token = $user->createToken('BearerToken')->plainTextToken;
 
         $odgovor = [
-            'Poruka' => 'Uspesna registracija!',
-            'User: ' => $user,
-            'Token: ' => $token,
+            'Poruka' => 'Uspešna registracija!',
+            'User' => $user,
+            'Token' => $token,
         ];
 
         return response()->json($odgovor);
     }
 
-    //login
+    // Login
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,29 +49,27 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['Greska:', $validator->errors()]);
+            return response()->json(['Greška:' => $validator->errors()]);
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['Greska pri prijavi: ' => 'Pokusajte ponovo!']);
+            return response()->json(['Greška pri prijavi:' => 'Pokušajte ponovo!']);
         }
 
         $user = User::where('email', $request['email'])->firstOrFail();
 
-
-
-        $token = $user->createToken('TokenLogin')->plainTextToken;
+        $token = $user->createToken('BearerToken')->plainTextToken;
 
         $odgovor = [
-            'Poruka' => 'Uspesna prijava!',
-            'User: ' => $user,
-            'Token: ' => $token,
+            'Poruka' => 'Uspešna prijava!',
+            'User' => $user,
+            'Token' => $token,
         ];
-
 
         return response()->json($odgovor);
     }
 
+ 
     //logout
     public function logout()
     {

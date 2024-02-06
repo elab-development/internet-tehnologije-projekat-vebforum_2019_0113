@@ -32,41 +32,30 @@ class ObjavaController extends Controller
 
         $user_id = Auth::user()->id; 
 
-    $validator = Validator::make($request->all(), [
-        'naziv' => 'required',
-        'tekst' => 'required',
-        'tema_id' => 'required',
+            $validator = Validator::make($request->all(), [
+                'naziv' => 'required',
+                'tekst' => 'required',
+                'tema_id' => 'required', 
+            ]);
 
-
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json($validator->errors());
-    }
-            //MODERATOR TEMA
-            $jeModeratorTeme = Auth::user()->jeModeratorTeme;
-            //MODERATOR ZAJEDNICA
-            $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
-            //ADMINISTRATOR
-            $jeAdmin = Auth::user()->jeAdmin;
-    
-            if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
-                return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da kreiraju objave'], 403);
+            if ($validator->fails()) {
+                return response()->json($validator->errors());
             }
+                  
 
-    $objava = new Objava();
-    $objava->naziv = $request->naziv;
-    $objava->tekst = $request->tekst;
-    $objava->datumObjave = Carbon::now()->format('Y-m-d');
-    $objava->brojSvidjanja = 0;
-    $objava->brojNesvidjanja = 0;
-    $objava->tema_id = $request->tema_id;
-    $objava->user_id = $user_id;
+                    $objava = new Objava();
+                    $objava->naziv = $request->naziv;
+                    $objava->tekst = $request->tekst;
+                    $objava->datumObjave = Carbon::now()->format('Y-m-d');
+                    $objava->brojSvidjanja = 0;
+                    $objava->brojNesvidjanja = 0;
+                    $objava->tema_id = $request->tema_id;
+                    $objava->user_id = $user_id;
 
-    $objava->save();
+            $objava->save();
 
-    return response()->json(['Korisnik je uspesno kreirao objavu!!!',
-         new ObjavaResource($objava)]);
+            return response()->json(['Korisnik je uspesno kreirao objavu!!!',
+                new ObjavaResource($objava)]);
     }
 
 

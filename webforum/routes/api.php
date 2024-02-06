@@ -43,9 +43,9 @@ Route::get('objave/{id}', [ObjavaController::class, 'show']);
 //KOMENTARI
 Route::get('komentari', [KomentarController::class, 'index']);
 Route::get('komentari/{id}', [KomentarController::class, 'show']); 
-
+ 
 //RUTE ZA KOJE NAM TREBA LOGIN
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     //ZAJEDNICE
     Route::resource('zajednice', ZajednicaController::class);
