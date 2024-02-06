@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar';
 import ObjaveComponent from './components/objave/ObjaveComponent ';
 import Details from './components/objave/Details';
 import Register from './components/loginRegistracija/Register';
+import Login from './components/loginRegistracija/Login';
 
 function App() {
   const [comments, setComments]= useState([]);
@@ -19,6 +20,7 @@ function App() {
           <Route path="/objave/:id" element={<Details comments={comments}  setComments={setComments}/>} />
           <Route path="/objave" element={<ObjaveComponent  />} />
           <Route path="/register" element={<Register  />} />
+          <Route path="/login" element={<Login  />} />
         </Routes>
       </div>
     </BrowserRouter>
