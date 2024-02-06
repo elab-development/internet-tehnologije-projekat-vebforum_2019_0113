@@ -6,6 +6,7 @@ import ForumHomepage from './components/home/ForumHomePage';
 import Navbar from './components/navbar/Navbar';
 import ObjaveComponent from './components/objave/ObjaveComponent ';
 import Details from './components/objave/Details';
+import Register from './components/loginRegistracija/Register';
 
 function App() {
   const [comments, setComments]= useState([]);
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<ForumHomepage />} />
           <Route path="/objave/:id" element={<Details comments={comments}  setComments={setComments}/>} />
           <Route path="/objave" element={<ObjaveComponent  />} />
+          <Route path="/register" element={<Register  />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -5,7 +5,7 @@ import './ObjaveComponent.css';
 import useObjave from './useObjave';
 
 const ObjaveComponent = () => {
-    const [objave, setObjave] = useObjave('http://127.0.0.1:8000/api/objave');
+  const [objave, setObjave] =  useObjave('http://127.0.0.1:8000/api/objave');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);  

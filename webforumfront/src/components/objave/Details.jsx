@@ -47,9 +47,7 @@ const Details = ({comments, setComments}) => {
     return sortAscending ? dateA - dateB : dateB - dateA;
   });
 
-  if (!objava) {
-    return <div>Loading...</div>;
-  }
+
   return (
     <div className="details-container">
            <div className="details-header" style={{ backgroundColor: '#yourColor' }}>
