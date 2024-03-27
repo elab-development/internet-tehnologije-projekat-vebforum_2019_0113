@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({token,setToken}) => {
+  let navigate=useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: 'kiki123@gmail.com',
+    password: 'kiki123',
   });
 
   const handleChange = (e) => {
@@ -21,9 +23,10 @@ const Login = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
       const { user, token } = response.data;
 
-      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('token', response.data.Token);
+      setToken(response.data.Token);
       console.log('Uspesna prijava!', user);
-
+      navigate('/objave');
       
     } catch (error) {
       console.error('Greška pri prijavi:', error.response.data);

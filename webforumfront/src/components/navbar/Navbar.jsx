@@ -1,36 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'; // Dodajte import za axios
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';  
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({token,setToken}) => {
+  let navigate=useNavigate();
   const handleLogout = async () => {
     try {
-      // Izvršite Axios POST zahtev za odjavu
-      await axios.post('http://127.0.0.1:8000/api/logout');
-       
-      sessionStorage.removeItem('token');
-       
-      window.location.reload();
+      const token = sessionStorage.getItem('token');   
+      await axios.post('http://127.0.0.1:8000/api/logout', null, {
+        headers: {
+          'Authorization': `Bearer ${token}`  
+        }
+      });
+
+      setToken(null);
+      sessionStorage.clear();
+      navigate('/');
     } catch (error) {
       console.error('Greška prilikom odjave:', error);
-      // Dodajte kod za obradu greške pri odjavi ako je potrebno
     }
   };
 
   return (
     <nav className="navbar">
       <Link to="/" className="nav-link">Home</Link>
-      <Link to="/objave" className="nav-link">Objave</Link>
-      {sessionStorage.getItem('token') ? (
+      {token ? (
         <>
+          <Link to="/dodaj" className="nav-link">Dodaj</Link>
           <Link to="/" className="nav-link" onClick={handleLogout}>Logout</Link>
         </>
       ) : (
         <>
           <Link to="/register" className="nav-link">Register</Link>
           <Link to="/login" className="nav-link">Login</Link>
-          <Link to="/dodaj" className="nav-link">Dodaj</Link>
         </>
       )}
     </nav>

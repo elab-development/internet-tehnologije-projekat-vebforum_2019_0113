@@ -39,8 +39,14 @@ const Dodaj = () => {
       tekst,
     };
 
+    const token = sessionStorage.getItem('token');
+
     // Slanje podataka na server putem Axios POST zahteva
-    axios.post('http://127.0.0.1:8000/api/objave', postData)
+    axios.post('http://127.0.0.1:8000/api/objave', postData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((response) => {
         console.log('Objava uspešno kreirana:', response.data);
         // Očistite polja za unos nakon uspešnog kreiranja

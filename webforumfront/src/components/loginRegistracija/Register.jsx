@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +8,7 @@ const Register = () => {
     email: '',
     password: '',
   });
-
+  let navigate=useNavigate();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,10 +22,10 @@ const Register = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register', formData);
       console.log(response.data);
-      // Dodajte kod za obradu uspešne registracije, na primer preusmeravanje na prijavu.
+      navigate('/login');
     } catch (error) {
       console.error(error.response.data);
-      // Dodajte kod za obradu greške prilikom registracije.
+     
     }
   };
 

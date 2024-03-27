@@ -12,17 +12,18 @@ import Dodaj from './components/objave/Dodaj';
 
 function App() {
   const [comments, setComments]= useState([]);
+  const [token, setToken]= useState(null);
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar></Navbar>
+        <Navbar token={token} setToken={setToken}></Navbar>
         <Routes>
           <Route path="/" element={<ForumHomepage />} />
           <Route path="/objave/:id" element={<Details comments={comments}  setComments={setComments}/>} />
           <Route path="/objave" element={<ObjaveComponent  />} />
           <Route path="/dodaj" element={<Dodaj  />} />
           <Route path="/register" element={<Register  />} />
-          <Route path="/login" element={<Login  />} />
+          <Route path="/login" element={<Login token={token} setToken={setToken} />} />
         </Routes>
       </div>
     </BrowserRouter>
