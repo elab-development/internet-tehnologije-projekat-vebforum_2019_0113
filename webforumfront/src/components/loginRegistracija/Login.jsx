@@ -24,6 +24,7 @@ const Login = ({token,setToken}) => {
       const { user, token } = response.data;
 
       sessionStorage.setItem('token', response.data.Token);
+      sessionStorage.setItem('user', JSON.stringify(response.data.User));
       setToken(response.data.Token);
       console.log('Uspesna prijava!', user);
       navigate('/objave');

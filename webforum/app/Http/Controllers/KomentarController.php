@@ -32,45 +32,27 @@ class KomentarController extends Controller
     {
         $user_id = Auth::user()->id; 
 
-    $validator = Validator::make($request->all(), [
-        'tekst' => 'required',
-        'objava_id' => 'required',
+        $validator = Validator::make($request->all(), [
+            'tekst' => 'required',
+            'objava_id' => 'required',
 
-    ]);
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors());
-    }
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        } 
+        $komentar = new Komentar();
+        $komentar->tekst = $request->tekst;
+        $komentar->datumKomentarisanja = Carbon::now()->format('Y-m-d');
+        $komentar->brojSvidjanja = 0;
+        $komentar->brojNesvidjanja = 0;
+        $komentar->objava_id = $request->objava_id; 
 
-            //MODERATOR TEMA
-            $jeModeratorTeme = Auth::user()->jeModeratorTeme;
-            //MODERATOR ZAJEDNICA
-            $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
-            //ADMINISTRATOR
-            $jeAdmin = Auth::user()->jeAdmin;
-    
-            if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
-                return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da ostavljaju komentare'], 403);
-            }
+        $komentar->user_id = $user_id;
 
+        $komentar->save(); 
 
-    $komentar = new Komentar();
-    $komentar->tekst = $request->tekst;
-    $komentar->datumKomentarisanja = Carbon::now()->format('Y-m-d');
-    $komentar->brojSvidjanja = 0;
-    $komentar->brojNesvidjanja = 0;
-    $komentar->objava_id = $request->objava_id;
-    
-    $objava = Objava::find($komentar->objava_id);
-
-    $komentar->user_id = $user_id;
-
-    $komentar->save();
-
-
-
-    return response()->json(['Korisnik je uspesno ostavio komentar na objavi: '.$objava->naziv.' !!!',
-         new KomentarResource($komentar)]);
+        return response()->json( new KomentarResource($komentar));
     }
 
 

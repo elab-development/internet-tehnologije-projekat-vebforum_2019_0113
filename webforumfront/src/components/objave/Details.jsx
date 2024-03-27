@@ -5,10 +5,10 @@ import './Details.css';
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import CommentComponent from './CommentComponent ';
 
-const Details = ({comments, setComments}) => {
+const Details = () => {
   const { id } = useParams();
   const [objava, setObjava] = useState(null);
-  
+  const [comments, setComments]= useState([]);
   const [newComment, setNewComment] = useState('');
   const [sortAscending, setSortAscending] = useState(true);
   useEffect(() => {
@@ -23,16 +23,30 @@ const Details = ({comments, setComments}) => {
     setNewComment(e.target.value);
   };
 
-  const submitComment = () => {
-    const comment = {
-      text: newComment,
-      date: new Date().toISOString(),
-      objavaId: id
-    };
-    setComments([...comments, comment]);
-    setNewComment(''); // Reset the comment input field
+  const submitComment = async () => {
+    try {
+      const token = sessionStorage.getItem('token');  
+  
+      const response = await axios.post('http://127.0.0.1:8000/api/komentari', {
+        tekst: newComment,
+        objava_id: id
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}` // Dodavanje tokena u zaglavlju
+        }
+      });
+  
+      const { data } = response;
+      console.log(data)
+      setComments([...comments, data]);
+      setNewComment('');
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
   };
-
+  const obrisiKomentar = (idKomentara) => { //brise iz lokalne memorije
+    setComments(comments.filter(comment => comment.id_komentara !== idKomentara));
+  };
   if (!objava) {
     return <div>Loading...</div>;
   }
@@ -88,7 +102,7 @@ const Details = ({comments, setComments}) => {
       </button>
       <div>
         {sortedComments.map((comment, index) => (
-          <CommentComponent key={index} comment={comment} />
+          <CommentComponent key={index} comment={comment}  deleteComment={obrisiKomentar }/>
         ))}
       </div>
     </div>

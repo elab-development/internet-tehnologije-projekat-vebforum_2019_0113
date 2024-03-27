@@ -11,7 +11,7 @@ import Login from './components/loginRegistracija/Login';
 import Dodaj from './components/objave/Dodaj';
 
 function App() {
-  const [comments, setComments]= useState([]);
+ 
   const [token, setToken]= useState(null);
   return (
     <BrowserRouter>
@@ -19,7 +19,7 @@ function App() {
         <Navbar token={token} setToken={setToken}></Navbar>
         <Routes>
           <Route path="/" element={<ForumHomepage />} />
-          <Route path="/objave/:id" element={<Details comments={comments}  setComments={setComments}/>} />
+          <Route path="/objave/:id" element={<Details  />} />
           <Route path="/objave" element={<ObjaveComponent  />} />
           <Route path="/dodaj" element={<Dodaj  />} />
           <Route path="/register" element={<Register  />} />
