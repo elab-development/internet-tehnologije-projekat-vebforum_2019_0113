@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>"Administrator webforuma",
             'email'=>"admin_webforum@gmail.com",
-            'password' =>  "admin",
+            'password' =>  Hash::make("admin"),
             'jeAdmin' => true,
             'remember_token' => Str::random(10),
         ]);
@@ -26,7 +27,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>"Kristijan Kestic",
             'email'=>"kiki123@gmail.com",
-            'password' =>  "kiki123",
+            'password' =>   Hash::make("kiki123"),
             'jeModeratorZajednice' => true,
             'remember_token' => Str::random(10),
         ]);
@@ -35,7 +36,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>"Djina Mitic",
             'email'=>"djiki88@gmail.com",
-            'password' =>  "djiki88",
+            'password' =>   Hash::make("djiki88"),
             'jeModeratorTeme' => true,
             'remember_token' => Str::random(10),
         ]);
