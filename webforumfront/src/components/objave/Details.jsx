@@ -11,6 +11,7 @@ const Details = () => {
   const [comments, setComments]= useState([]);
   const [newComment, setNewComment] = useState('');
   const [sortAscending, setSortAscending] = useState(true);
+
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/objave/${id}`)
       .then(response => {
@@ -37,34 +38,73 @@ const Details = () => {
       });
   
       const { data } = response;
-      console.log(data)
+      console.log(data);
       setComments([...comments, data]);
       setNewComment('');
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
   };
-  const obrisiKomentar = (idKomentara) => { //brise iz lokalne memorije
-    setComments(comments.filter(comment => comment.id_komentara !== idKomentara));
+
+  // Nova funkcija za sviđanje objave
+  const likePost = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      await axios.post(`http://127.0.0.1:8000/api/svidjanje/objava/${id}`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      // Ažuriranje broja sviđanja u lokalnom stanju
+      setObjava(prevState => ({
+        ...prevState,
+        broj_svidjanja: prevState.broj_svidjanja + 1
+      }));
+    } catch (error) {
+      console.error('Error liking the post:', error);
+    }
   };
+
+  // Nova funkcija za nesviđanje objave
+  const dislikePost = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      await axios.post(`http://127.0.0.1:8000/api/nesvidjanje/objava/${id}`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      // Ažuriranje broja nesviđanja u lokalnom stanju
+      setObjava(prevState => ({
+        ...prevState,
+        broj_nesvidjanja: prevState.broj_nesvidjanja + 1
+      }));
+    } catch (error) {
+      console.error('Error disliking the post:', error);
+    }
+  };
+
   if (!objava) {
     return <div>Loading...</div>;
   }
+
   const toggleSortOrder = () => {
     setSortAscending(!sortAscending);
   };
 
-  // Function to sort comments based on date
   const sortedComments = [...comments].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return sortAscending ? dateA - dateB : dateB - dateA;
   });
-
-
+  const obrisiKomentar = (idKomentara) => {  
+    setComments(comments.filter(comment => comment.id_komentara !== idKomentara));
+  };
   return (
     <div className="details-container">
-           <div className="details-header" style={{ backgroundColor: '#yourColor' }}>
+      <div className="details-header" style={{ backgroundColor: '#yourColor' }}>
         <h2 className="details-title">{objava.naziv}</h2>
         <span className="details-category">{objava.tema.naziv_teme}</span>
         <p className="details-date">{objava.datum_objave}</p>
@@ -76,15 +116,15 @@ const Details = () => {
       <p className="details-info">
         <strong>Opis teme:</strong> {objava.tema.opis}
       </p>
-      <div className="details-likes">
+      <div className="details-likes" onClick={likePost}>
         <strong>
-          <FaThumbsUp style={{ color: 'green' }} />
+          <FaThumbsUp style={{ cursor: 'pointer', color: 'green' }} />
           {objava.broj_svidjanja}
         </strong>
       </div>
-      <div className="details-dislikes">
+      <div className="details-dislikes" onClick={dislikePost}>
         <strong>
-          <FaThumbsDown style={{ color: 'red' }} />
+          <FaThumbsDown style={{ cursor: 'pointer', color: 'red' }} />
           {objava.broj_nesvidjanja}
         </strong>
       </div>
@@ -102,7 +142,7 @@ const Details = () => {
       </button>
       <div>
         {sortedComments.map((comment, index) => (
-          <CommentComponent key={index} comment={comment}  deleteComment={obrisiKomentar }/>
+          <CommentComponent key={index} comment={comment} deleteComment={obrisiKomentar} />
         ))}
       </div>
     </div>
