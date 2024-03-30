@@ -111,3 +111,37 @@
 .modal form button:hover {
   background-color: #EFAFFF;
 }
+
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.post-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.post-card img {
+  max-width: 100%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.post-card p {
+  margin-bottom: 5px;
+}
+
+.post-card a {
+  color: #DC6BAD;
+  text-decoration: none;
+}
+
+.post-card a:hover {
+  text-decoration: underline;
+}
