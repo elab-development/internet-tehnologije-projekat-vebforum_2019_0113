@@ -25,6 +25,7 @@ const Navbar = ({token,setToken}) => {
   return (
     <nav className="navbar">
       <Link to="/" className="nav-link">Home</Link>
+      <Link to="/reddit" className="nav-link">Redit</Link>
       {token ? (
         <>
           <Link to="/dodaj" className="nav-link">Dodaj</Link>
