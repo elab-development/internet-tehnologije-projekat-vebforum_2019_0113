@@ -9,6 +9,7 @@ import Details from './components/objave/Details';
 import Register from './components/loginRegistracija/Register';
 import Login from './components/loginRegistracija/Login';
 import Dodaj from './components/objave/Dodaj';
+import Admin from './components/Admin/Admin';
 
 function App() {
  
@@ -24,6 +25,11 @@ function App() {
           <Route path="/dodaj" element={<Dodaj  />} />
           <Route path="/register" element={<Register  />} />
           <Route path="/login" element={<Login token={token} setToken={setToken} />} />
+
+          <Route path="/admin" element={<Admin  />} />
+
+
+
         </Routes>
       </div>
     </BrowserRouter>

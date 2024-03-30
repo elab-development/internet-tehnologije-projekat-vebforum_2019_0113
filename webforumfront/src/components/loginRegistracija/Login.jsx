@@ -27,7 +27,12 @@ const Login = ({token,setToken}) => {
       sessionStorage.setItem('user', JSON.stringify(response.data.User));
       setToken(response.data.Token);
       console.log('Uspesna prijava!', user);
-      navigate('/objave');
+      if(response.data.User.jeAdmin==1 || response.data.User.jeModeratorZajednice==1 ){
+        navigate('/admin')
+      }else{
+        navigate('/objave');
+      }
+      
       
     } catch (error) {
       console.error('Greška pri prijavi:', error.response.data);
