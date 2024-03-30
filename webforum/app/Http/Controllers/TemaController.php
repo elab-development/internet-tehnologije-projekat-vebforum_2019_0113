@@ -52,8 +52,8 @@ class TemaController extends Controller
                 //ADMINISTRATOR
                 $jeAdmin = Auth::user()->jeAdmin;
         
-                if ($jeModeratorTeme || $jeModeratorZajednice || $jeAdmin) {
-                    return response()->json(['error' => 'NEOVLASCEN PRISTUP: Administrator i moderatori nemaju ovlascenje da kreiraju teme'], 403);
+                if (!$jeModeratorTeme && !$jeModeratorZajednice && !$jeAdmin) {
+                    return response()->json(['error' => 'NEOVLASCEN PRISTUP'], 403);
                 }
 
 
@@ -141,11 +141,16 @@ class TemaController extends Controller
     public function destroy($id)
     {
         $user_id = Auth::user()->id; 
+        //MODERATOR TEMA
         $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        //MODERATOR ZAJEDNICA
+        $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+        //ADMINISTRATOR
+        $jeAdmin = Auth::user()->jeAdmin;
         $tema_user_id = Tema::where('id', $id)->value('user_id');
 
-        if($user_id != $tema_user_id && !$jeModeratorTeme){
-            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu brisati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
+        if (!$jeModeratorTeme && !$jeModeratorZajednice && !$jeAdmin) {
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP'], 403);
         }
         $tema = tema::findOrFail($id);
           // Public storage
