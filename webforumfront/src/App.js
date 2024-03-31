@@ -13,6 +13,7 @@ import Admin from './components/Admin/Admin';
 import RedditAPI from './components/Redit/RedditAPI';
 import Statistika from './components/Admin/Statistika';
 import Footer from './components/navbar/Footer';
+import NotFound from './components/NotFound';
 
 function App() {
  
@@ -32,7 +33,7 @@ function App() {
        
           <Route path="/admin/statistika" element={<Statistika  />} />
           <Route path="/admin" element={<Admin  />} />
-
+          <Route path="/*" element={<NotFound  />} />
         </Routes>
         <Footer></Footer>
       </div>

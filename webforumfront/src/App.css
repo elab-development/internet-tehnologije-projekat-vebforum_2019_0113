@@ -227,3 +227,13 @@
   color: #333;
   text-align: center;
 }
+.not-found-container {
+  margin: 10% auto 0;
+  padding: 20px;
+  background-color: #8C7AA9;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+  text-align: center;
+}
