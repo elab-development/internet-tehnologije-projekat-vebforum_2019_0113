@@ -15,9 +15,18 @@ use Illuminate\Support\Facades\Auth;
 
 class KomentarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $komentari = Komentar::all();
+        // Proveri da li je prosleđen objava_id kroz zahtev
+        if ($request->has('objava_id')) {
+            $objava_id = $request->input('objava_id');
+            // Dohvati sve komentare povezane sa određenom objavom
+            $komentari = Komentar::where('objava_id', $objava_id)->get();
+        } else {
+            // Ako nije prosleđen objava_id, dohvati sve komentare
+            $komentari = Komentar::all();
+        }
+    
         return KomentarResource::collection($komentari);
     }
 

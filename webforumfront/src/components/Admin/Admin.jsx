@@ -46,20 +46,30 @@ const Admin = () => {
       formDataWithToken.append('opis', formData.opis);
       formDataWithToken.append('baner', formData.baner);
       formDataWithToken.append('zajednica_id', 1);
-
+  
       const token = sessionStorage.getItem('token');  
-
+  
       const response = await axios.post('http://127.0.0.1:8000/api/teme', formDataWithToken, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-
-      console.log(response.data);  
+  
+      setShowModal(false);
+    // Resetovanje forme
+    setFormData({
+        naziv: '',
+        opis: '',
+        baner: null
+    });
+    
+      setTeme(prevTeme => [...prevTeme, response.data[1]]);
     } catch (error) {
       console.error('Error creating tema:', error);
     }
   };
+  
+ 
   const handleDelete = async (id) => {
     try {
       const token = sessionStorage.getItem('token');
@@ -122,6 +132,7 @@ const Admin = () => {
                 <input type="file" name="baner" onChange={handleFileChange} />
               </div> 
               <button type="submit">Kreiraj temu</button>
+              <button type="button" onClick={() => setShowModal(false)}>Odustani</button>
             </form>
           </div>
         </div>

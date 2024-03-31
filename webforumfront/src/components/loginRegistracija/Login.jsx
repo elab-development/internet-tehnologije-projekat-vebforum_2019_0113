@@ -22,21 +22,25 @@ const Login = ({token,setToken}) => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/login', formData);
       const { user, token } = response.data;
-
-      sessionStorage.setItem('token', response.data.Token);
-      sessionStorage.setItem('user', JSON.stringify(response.data.User));
-      setToken(response.data.Token);
-      console.log('Uspesna prijava!', user);
-      if(response.data.User.jeAdmin==1 || response.data.User.jeModeratorZajednice==1 ){
-        navigate('/admin')
+      if(response.data.status==200){
+          sessionStorage.setItem('token', response.data.Token);
+          sessionStorage.setItem('user', JSON.stringify(response.data.User));
+          setToken(response.data.Token);
+          console.log('Uspesna prijava!', user);
+          if(response.data.User.jeAdmin==1 || response.data.User.jeModeratorZajednice==1 ){
+            navigate('/admin')
+          }else{
+            navigate('/objave');
+        }
       }else{
-        navigate('/objave');
+        alert("GRESKA!")
       }
+      
       
       
     } catch (error) {
       console.error('Greška pri prijavi:', error.response.data);
-
+      alert("GRESKA!")
      
     }
   };

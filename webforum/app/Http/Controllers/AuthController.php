@@ -49,7 +49,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['Greška:' => $validator->errors()]);
+            return response()->json(['status'=>400,'Greška:' => $validator->errors()]);
         }
 
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -61,6 +61,7 @@ class AuthController extends Controller
         $token = $user->createToken('BearerToken')->plainTextToken;
 
         $odgovor = [
+            'status'=>200,
             'Poruka' => 'Uspešna prijava!',
             'User' => $user,
             'Token' => $token,

@@ -4,11 +4,13 @@ import axios from 'axios';
 import './Details.css';
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 import CommentComponent from './CommentComponent ';
+import useKomentari from './useKomentari';
 
 const Details = () => {
   const { id } = useParams();
   const [objava, setObjava] = useState(null);
-  const [comments, setComments]= useState([]);
+  const { data: comments, setData: setComments, isLoading, error } = useKomentari('http://127.0.0.1:8000/api/komentari', id);
+
   const [newComment, setNewComment] = useState('');
   const [sortAscending, setSortAscending] = useState(true);
 
@@ -27,7 +29,7 @@ const Details = () => {
   const submitComment = async () => {
     try {
       const token = sessionStorage.getItem('token');  
-  
+
       const response = await axios.post('http://127.0.0.1:8000/api/komentari', {
         tekst: newComment,
         objava_id: id
@@ -36,7 +38,7 @@ const Details = () => {
           'Authorization': `Bearer ${token}` // Dodavanje tokena u zaglavlju
         }
       });
-  
+
       const { data } = response;
       console.log(data);
       setComments([...comments, data]);
@@ -137,12 +139,15 @@ const Details = () => {
         />
         <button onClick={submitComment}>Postavi komentar</button>
       </div>
-      <button onClick={toggleSortOrder}>
-        Sortiraj Komentare {sortAscending ? 'Opadajuće' : 'Rastuće'}
-      </button>
+     
       <div>
         {sortedComments.map((comment, index) => (
-          <CommentComponent key={index} comment={comment} deleteComment={obrisiKomentar} />
+          <CommentComponent 
+            key={index} 
+            comment={comment} 
+            deleteComment={obrisiKomentar} 
+            
+        />
         ))}
       </div>
     </div>
