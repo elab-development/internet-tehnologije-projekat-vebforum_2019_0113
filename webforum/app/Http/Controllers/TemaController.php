@@ -90,17 +90,22 @@ class TemaController extends Controller
     public function update(Request $request, $id)
     {
         $user_id = Auth::user()->id; 
+        //MODERATOR TEMA
         $jeModeratorTeme = Auth::user()->jeModeratorTeme;
+        //MODERATOR ZAJEDNICA
+        $jeModeratorZajednice = Auth::user()->jeModeratorZajednice;
+        //ADMINISTRATOR
+        $jeAdmin = Auth::user()->jeAdmin;
         $tema_user_id = Tema::where('id', $id)->value('user_id');
 
-        if($user_id != $tema_user_id && !$jeModeratorTeme){
-            return response()->json(['error' => 'NEOVLASCEN PRISTUP: Temu mogu menjati samo moderator tema ili korisnik koji ju je kreirao!'], 403);
+        if (!$jeModeratorTeme && !$jeModeratorZajednice && !$jeAdmin) {
+            return response()->json(['error' => 'NEOVLASCEN PRISTUP'], 403);
         }
 
         $validator = Validator::make($request->all(), [
             'naziv' => 'required',
             'opis' => 'required',
-            'baner' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'baner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {

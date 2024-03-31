@@ -1,6 +1,6 @@
 .admin-container {
-  max-width: 800px;
-  margin: 0 auto;
+  
+  margin: 5%;
   padding: 20px;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
@@ -147,16 +147,7 @@
 }
 
 
-.admin-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  color: #333;
-}
+ 
 
 .admin-title {
   font-size: 24px;
@@ -225,4 +216,14 @@
 
 .statistika-chart {
   margin-top: 20px;
+}
+.footer-container { 
+  margin: 10% auto 0;
+  padding: 20px;
+  background-color: #8C7AA9;  
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+  text-align: center;
 }

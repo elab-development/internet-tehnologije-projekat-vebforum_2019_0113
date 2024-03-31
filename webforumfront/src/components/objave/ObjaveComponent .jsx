@@ -66,7 +66,7 @@ const ObjaveComponent = () => {
   return (
     <div className="objave-container">
      
-      <select value={selectedTema} onChange={handleTemaChange} className="teme-select">
+      <select value={selectedTema} onChange={handleTemaChange} className="admin-select">
         <option value="">Sve teme</option>
         {teme.map(tema => (
           <option key={tema.id_teme} value={tema.id_teme}>{tema.naziv_teme}</option>

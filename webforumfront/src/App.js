@@ -12,6 +12,7 @@ import Dodaj from './components/objave/Dodaj';
 import Admin from './components/Admin/Admin';
 import RedditAPI from './components/Redit/RedditAPI';
 import Statistika from './components/Admin/Statistika';
+import Footer from './components/navbar/Footer';
 
 function App() {
  
@@ -33,6 +34,7 @@ function App() {
           <Route path="/admin" element={<Admin  />} />
 
         </Routes>
+        <Footer></Footer>
       </div>
     </BrowserRouter>
   );
