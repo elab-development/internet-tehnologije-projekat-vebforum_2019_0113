@@ -12,7 +12,7 @@ const Details = () => {
   const { data: comments, setData: setComments, isLoading, error } = useKomentari('http://127.0.0.1:8000/api/komentari', id);
 
   const [newComment, setNewComment] = useState('');
-  const [sortAscending, setSortAscending] = useState(true);
+ 
 
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/objave/${id}`)
@@ -92,15 +92,8 @@ const Details = () => {
     return <div>Loading...</div>;
   }
 
-  const toggleSortOrder = () => {
-    setSortAscending(!sortAscending);
-  };
-
-  const sortedComments = [...comments].sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return sortAscending ? dateA - dateB : dateB - dateA;
-  });
+ 
+ 
   const obrisiKomentar = (idKomentara) => {  
     setComments(comments.filter(comment => comment.id_komentara !== idKomentara));
   };
@@ -141,7 +134,7 @@ const Details = () => {
       </div>
      
       <div>
-        {sortedComments.map((comment, index) => (
+        {comments.map((comment, index) => (
           <CommentComponent 
             key={index} 
             comment={comment} 

@@ -43,8 +43,7 @@ function Statistika() {
                 beginAtZero: true,
             },
         },
-    };
-
+    }; 
     return (
         <div className="statistika-container">
           <h2 className="statistika-title">Statistika</h2>

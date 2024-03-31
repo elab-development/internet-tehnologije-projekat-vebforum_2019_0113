@@ -27,9 +27,7 @@ const ObjaveComponent = () => {
   };
 
   const handleTemaChange = (e) => {
-    setSelectedTema(e.target.value);
-    console.log(selectedTema)
-    console.log(e.target.value)
+    setSelectedTema(e.target.value); 
     setSearchTerm(''); // Resetujemo pretragu pri promeni teme
     setCurrentPage(1); // Resetujemo na prvu stranicu pri promeni teme
   };
