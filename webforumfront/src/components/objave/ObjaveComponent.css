@@ -47,9 +47,9 @@
     background-color: #EFAFFF;  
   }
   .search-input {
-    width: 100%;
+    width: 80%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 10px ;
     border: 1px solid #ccc;
     border-radius: 4px;
   }

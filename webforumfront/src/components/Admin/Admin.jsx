@@ -8,8 +8,8 @@ const Admin = () => {
     naziv: '',
     opis: '',
     baner: null,
- 
   });
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,20 +56,18 @@ const Admin = () => {
       });
   
       setShowModal(false);
-    // Resetovanje forme
-    setFormData({
+      // Resetovanje forme
+      setFormData({
         naziv: '',
         opis: '',
         baner: null
-    });
-    
+      });
       setTeme(prevTeme => [...prevTeme, response.data[1]]);
     } catch (error) {
       console.error('Error creating tema:', error);
     }
   };
   
- 
   const handleDelete = async (id) => {
     try {
       const token = sessionStorage.getItem('token');
@@ -85,9 +83,26 @@ const Admin = () => {
       console.error('Error deleting tema:', error);
     }
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredTeme = teme.filter(tema =>
+    tema.naziv_teme.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tema.opis.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="admin-container">
       <h1 className="admin-title">Admin Panel</h1>
+      <input 
+        type="text" 
+        placeholder="Pretraži teme..." 
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="search-input"
+      />
       <button className="admin-add-button" onClick={() => setShowModal(true)}>Dodaj novu temu</button>
       <table className="admin-table">
         <thead>
@@ -100,7 +115,7 @@ const Admin = () => {
           </tr>
         </thead>
         <tbody>
-          {teme.map((tema) => (
+          {filteredTeme.map((tema) => (
             <tr key={tema.id_teme}>
               <td>{tema.id_teme}</td>
               <td>{tema.naziv_teme}</td>

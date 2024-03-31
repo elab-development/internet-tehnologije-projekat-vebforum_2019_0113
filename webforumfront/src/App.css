@@ -196,3 +196,33 @@
   background-color: #EFAFFF;
 }
 
+.statistika-container {
+  max-width: 800px;
+  margin: 10%;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.statistika-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.statistika-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.statistika-info p {
+  margin: 0;
+}
+
+.statistika-chart {
+  margin-top: 20px;
+}

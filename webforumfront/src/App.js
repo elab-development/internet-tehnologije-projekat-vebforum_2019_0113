@@ -11,6 +11,7 @@ import Login from './components/loginRegistracija/Login';
 import Dodaj from './components/objave/Dodaj';
 import Admin from './components/Admin/Admin';
 import RedditAPI from './components/Redit/RedditAPI';
+import Statistika from './components/Admin/Statistika';
 
 function App() {
  
@@ -27,9 +28,9 @@ function App() {
           <Route path="/register" element={<Register  />} />
           <Route path="/login" element={<Login token={token} setToken={setToken} />} />
           <Route path="/reddit" element={<RedditAPI  />} />
+       
+          <Route path="/admin/statistika" element={<Statistika  />} />
           <Route path="/admin" element={<Admin  />} />
-
-
 
         </Routes>
       </div>

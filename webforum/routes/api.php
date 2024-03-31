@@ -12,6 +12,7 @@ use App\Http\Controllers\ZajednicaController;
 
 use App\Http\Controllers\SvidjanjeController;
 use App\Http\Controllers\NesvidjanjeController;
+use App\Http\Controllers\StatistikaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //SVIDJANJE I NESVIDJANJE KOMENTARA
     Route::post('/svidjanje/komentar/{id}', [SvidjanjeController::class, 'svidjaMiSeKomentar']);
     Route::post('/nesvidjanje/komentar/{id}', [NesvidjanjeController::class, 'nesvidjaMiSeKomentar']);
+
+    //STATISTIKE
+    Route::get('/statistika', [StatistikaController::class, 'statistika']);
 
     //LOGOUT
     Route::post('logout', [AuthController::class, 'logout']);
